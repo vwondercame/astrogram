@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.scss';
-import Header from './components/ui/Header';
-import AstroPostGrid from './components/ui/astropost/AstroPostGrid';
+import Header from './components/Header';
+import AstroPostGrid from './components/astropost/AstroPost';
+
+const apiKey = process.env.REACT_APP_APOD_KEY;
 
 const App = () => {
-  const [items, setItems] = useState([])
+  const [itemsData, setItemsData] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const fetchItems = async () => {
-      const result = await axios(`https://api.nasa.gov/planetary/apod?api_key=kYX6Vhhdr0tPshTV6FanxSs2DcXfg0lNqaiGZk5h`)
+    const fetchItemsData = async () => {
+      const result = await axios(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`)
 
       console.log(result.data);
-      setItems(result.data)
+      setItemsData(result.data)
       setIsLoading(false)
     }
 
-    fetchItems()
+    fetchItemsData()
   }, [])
+ 
+  if (!itemsData) return <div />
 
   return <div className="container">
-    <Header/>
-    <AstroPostGrid isLoading={isLoading} items={items}/>
+    <Header/>  
+    <AstroPostGrid isLoading={isLoading} itemsData={itemsData}/>
   </div>
 }
 
