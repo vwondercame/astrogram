@@ -25,6 +25,7 @@ const App = () => {
   if (!itemsData) return <div />
 
   return <div className="container">
+    
     <Header/>  
     <AstroPostGrid isLoading={isLoading} itemsData={itemsData}/>
   </div>
