@@ -1,34 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './App.scss';
-import Header from './components/Header';
-import AstroPostGrid from './components/astropost/AstroPost';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./App.scss";
+import Header from "./components/Header";
+import AstroPost from "./components/astropost/AstroPost";
 
 const apiKey = process.env.REACT_APP_APOD_KEY;
 
 const App = () => {
-  const [itemsData, setItemsData] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [itemsData, setItemsData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const generateRandomDate = () => {
+    const year = Math.floor(Math.random() * 18) + 1;
+    const day = Math.floor(Math.random() * 27) + 1;
+    const month = Math.floor(Math.random() * 11) + 1;
+    const fullDate = `20${year > 9 ? year : `0${year}`}-${
+      month > 9 ? month : `0${month}`
+    }-${day > 9 ? day : `0${day}`}`;
+    return fullDate;
+  };
+
+  let generatedDate = `&date=${generateRandomDate()}`;
 
   useEffect(() => {
     const fetchItemsData = async () => {
-      const result = await axios(`https://api.nasa.gov/planetary/apod?api_key=${apiKey}`)
+      const result = await axios(
+        `https://api.nasa.gov/planetary/apod?${generatedDate}&api_key=${apiKey}`
+      );
 
       console.log(result.data);
-      setItemsData(result.data)
-      setIsLoading(false)
-    }
+      setItemsData(result.data);
+      setIsLoading(false);
+    };
 
-    fetchItemsData()
-  }, [])
- 
-  if (!itemsData) return <div />
+    fetchItemsData();
+  }, []);
 
-  return <div className="container">
-    
-    <Header/>  
-    <AstroPostGrid isLoading={isLoading} itemsData={itemsData}/>
-  </div>
-}
+  if (!itemsData) return <div />;
+
+  return (
+    <div className="container">
+      <Header />
+      <AstroPost isLoading={isLoading} itemsData={itemsData} />
+    </div>
+  );
+};
 
 export default App;
