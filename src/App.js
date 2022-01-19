@@ -3,12 +3,15 @@ import axios from "axios";
 import "./App.scss";
 import Header from "./components/Header";
 import AstroPost from "./components/astropost/AstroPost";
+import { useParams, useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const apiKey = process.env.REACT_APP_APOD_KEY;
 
 const App = () => {
   const [itemsData, setItemsData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  // const [selectedDate, setSelectedDate] = useState(new Date());
 
   const generateRandomDate = () => {
     const year = Math.floor(Math.random() * 18) + 1;
@@ -19,15 +22,14 @@ const App = () => {
     }-${day > 9 ? day : `0${day}`}`;
     return fullDate;
   };
-
   let generatedDate = `&date=${generateRandomDate()}`;
 
   useEffect(() => {
     const fetchItemsData = async () => {
       const result = await axios(
+        // api request to a random date
         `https://api.nasa.gov/planetary/apod?${generatedDate}&api_key=${apiKey}`
       );
-
       console.log(result.data);
       setItemsData(result.data);
       setIsLoading(false);
@@ -41,6 +43,8 @@ const App = () => {
   return (
     <div className="container">
       <Header />
+ 
+      {/* <Calendar  /> */}
       <AstroPost isLoading={isLoading} itemsData={itemsData} />
     </div>
   );
