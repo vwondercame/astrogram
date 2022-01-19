@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
+import Heart from "react-animated-heart";
+
 
 const AstroPost = ({ itemsData, isLoading }) => {
-  const [like, setLike] = useState(false);
+  const [isClick, setClick] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
-  const resetPhoto= () => {
+  const resetPhoto = () => {
     window.location.reload();
   }
+  
+  const text = itemsData.explanation 
 
   return isLoading ? (
     <p>Loading...</p>
@@ -19,9 +24,15 @@ const AstroPost = ({ itemsData, isLoading }) => {
       <div className="card__description">
           <h2 className="card__description--title">{itemsData.title}</h2>
           <p className="card__description--date">{itemsData.date}</p>
-          {/* <p className="card__description--subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus harum, totam incidunt suscipit ea numquam voluptate sint error!</p> */}
-          <p className="card__description--subtitle">{itemsData.explanation}</p>
+            <p className="card__description--subtitle">
+              {showMore ? text : `${text.substring(0, 250)}`}
+              <button className="btn" onClick={() => setShowMore(!showMore)}>
+              {showMore ? "Show less" : "Show more"}
+              </button>
+             
+              </p>
           <button onClick={resetPhoto} className="card__description--button"> Next Photo</button>
+          <Heart isClick={isClick} onClick={() => setClick(!isClick)} />
       </div>
     </section>
     </>
