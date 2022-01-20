@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaHeart as HeartIcon } from "react-icons/fa";
 import { FaRegHeart as HeartIconFilled } from "react-icons/fa";
 
 const AstroPost = ({ itemsData, isLoading }) => {
-  const [like, setLike] = useState(false);
   const [isLiked, setIsLiked] = useState(true);
   const [showMore, setShowMore] = useState(false);
 
@@ -50,7 +49,7 @@ const AstroPost = ({ itemsData, isLoading }) => {
               id="button"
             >
               {" "}
-              <a href="#">Next Photo</a>
+              Next Photo
             </button>
 
             <button

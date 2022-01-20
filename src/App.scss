@@ -141,13 +141,12 @@ a {
     }
   }
 
-  #button a {
+  #button {
     position: relative;
     transition: all .45s ease-Out;
   }
 
-  #button:hover a {
+  #button:hover {
     color: #2D3142;
   }
-  
 }
