@@ -3,8 +3,7 @@ import axios from "axios";
 import "./App.scss";
 import Header from "./components/Header";
 import AstroPost from "./components/astropost/AstroPost";
-import { useParams, useNavigate } from "react-router-dom";
-import moment from "moment";
+import Stars from "./components/stars/Stars";
 
 const apiKey = process.env.REACT_APP_APOD_KEY;
 
@@ -43,9 +42,8 @@ const App = () => {
   return (
     <div className="container">
       <Header />
- 
-      {/* <Calendar  /> */}
       <AstroPost isLoading={isLoading} itemsData={itemsData} />
+      <Stars />
     </div>
   );
 };
